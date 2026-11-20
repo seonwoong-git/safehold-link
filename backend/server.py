@@ -188,7 +188,8 @@ class Handler(core.Handler):
             print(f'SafeHold local data error: {type(e.__cause__).__name__}',flush=True)
             return self.send(500,{'error':'지역 공공데이터 파일 로드 실패. ZIP을 다시 압축 해제하세요.'})
         except (ValueError,KeyError,IndexError,TypeError,binascii.Error) as e:
-            print(f'SafeHold response/input validation: {path} {type(e).__name__}',flush=True)
+            reason = str(e) if str(e) in ('AI schema', 'AI list', 'AI text', 'incomplete answer', 'empty or oversized response', 'model name') else 'other validation error'
+            print(f'SafeHold validation: {path} {type(e).__name__} {reason}', flush=True)
             msg={'/api/report':'신고 분석 응답 검증 실패','/api/synthesis':'종합분석 입력 또는 Gemini 응답 검증 실패','/api/environment':'환경 이미지 형식 또는 AI 응답 검증 실패','/api/training-brief':'훈련 브리핑 응답 검증 실패','/api/regional-brief':'지역 환경 응답 검증 실패'}[path]
             return self.send(400 if path=='/api/environment' else 502,{'error':msg})
         finally:core.SLOT.release()
