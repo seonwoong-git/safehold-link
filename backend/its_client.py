@@ -63,7 +63,13 @@ def check(road,key):
             if not result.get('ok'):return result
         except (ValueError,TypeError,UnicodeError):pass
         return {'ok':False,'message':f'ITS HTTP {e.code}: 인증키·서비스 설정 또는 제공처 확인'}
-    except (URLError,TimeoutError,OSError):return {'ok':False,'message':'ITS 네트워크 접속 실패 (포트 9443 또는 서버 상태 확인)'}
+    except (URLError, TimeoutError, OSError) as e:
+        reason = getattr(e, 'reason', e) if isinstance(e, URLError) else e
+        print('ITS ERROR:', type(reason).__name__,
+              'errno:', getattr(reason, 'errno', None),
+              'SSL:', getattr(reason, 'reason', None),
+              flush=True)
+        return {'ok':False,'message':'ITS 네트워크 접속 실패'}
     except (ValueError,TypeError,UnicodeError):return {'ok':False,'message':'ITS 응답 형식 확인 필요'}
 
 def limited_check(road,key):
