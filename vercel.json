@@ -1,0 +1,66 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "framework": null,
+  "buildCommand": "echo Static assets ready",
+  "outputDirectory": "public",
+  "functions": {
+    "api/index.py": {
+      "includeFiles": "backend/**",
+      "maxDuration": 60
+    }
+  },
+  "rewrites": [
+    {
+      "source": "/api/status",
+      "destination": "/api/index?__route=status"
+    },
+    {
+      "source": "/api/its-status",
+      "destination": "/api/index?__route=its-status"
+    },
+    {
+      "source": "/api/response-posts",
+      "destination": "/api/index?__route=response-posts"
+    },
+    {
+      "source": "/api/response-plan",
+      "destination": "/api/index?__route=response-plan"
+    },
+    {
+      "source": "/api/horizon",
+      "destination": "/api/index?__route=horizon"
+    },
+    {
+      "source": "/api/training-data",
+      "destination": "/api/index?__route=training-data"
+    },
+    {
+      "source": "/api/report",
+      "destination": "/api/index?__route=report"
+    },
+    {
+      "source": "/api/environment",
+      "destination": "/api/index?__route=environment"
+    },
+    {
+      "source": "/api/synthesis",
+      "destination": "/api/index?__route=synthesis"
+    },
+    {
+      "source": "/api/training-brief",
+      "destination": "/api/index?__route=training-brief"
+    },
+    {
+      "source": "/api/regional-brief",
+      "destination": "/api/index?__route=regional-brief"
+    },
+    {
+      "source": "/api/its-sample",
+      "destination": "/api/index?__route=its-sample"
+    },
+    {
+      "source": "/api/config",
+      "destination": "/api/index?__route=config"
+    }
+  ]
+}
